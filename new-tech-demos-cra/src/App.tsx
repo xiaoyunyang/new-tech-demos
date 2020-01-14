@@ -1,10 +1,12 @@
 import React from "react";
 import "./App.css";
+import UsersScreenNaive from "./screens/UsersScreenNaive";
+
 
 function App() {
   return (
       <div className="App">
-          <h1>Hello React App</h1>
+          <UsersScreenNaive />
       </div>
   );
 }
