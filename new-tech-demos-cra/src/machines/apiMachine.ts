@@ -8,47 +8,47 @@ export enum ApiMachineState {
   ERROR = "ERROR"
 }
 const usersMachine = Machine({
-  id: "usersMachine",
-  initial: ApiMachineState.IDLE,
-  context: {
-    users: [],
-    errorMessage: ""
-  },
-  states: {
-    [ApiMachineState.IDLE]: {
-      on: {
-        fetch: ApiMachineState.PENDING
-      }
+    id: "usersMachine",
+    initial: ApiMachineState.IDLE,
+    context: {
+        users: [],
+        errorMessage: ""
     },
-    [ApiMachineState.PENDING]: {
-      entry: "fetchData",
-      on: {
-        resolve: {
-          target: ApiMachineState.SUCCESS,
-          actions: ["setResults"]
+    states: {
+        [ApiMachineState.IDLE]: {
+            on: {
+                fetch: ApiMachineState.PENDING
+            }
         },
-        reject: {
-          target: ApiMachineState.ERROR,
-          actions: ["setError"]
+        [ApiMachineState.PENDING]: {
+            entry: "fetchData",
+            on: {
+                resolve: {
+                    target: ApiMachineState.SUCCESS,
+                    actions: ["setResults"]
+                },
+                reject: {
+                    target: ApiMachineState.ERROR,
+                    actions: ["setError"]
+                }
+            }
+        },
+        [ApiMachineState.SUCCESS]: {
+            on: {
+                fetch: ApiMachineState.PENDING
+            }
+        },
+        [ApiMachineState.ERROR]: {
+            on: {
+                fetch: ApiMachineState.PENDING
+            }
         }
-      }
-    },
-    [ApiMachineState.SUCCESS]: {
-      on: {
-        fetch: ApiMachineState.PENDING
-      }
-    },
-    [ApiMachineState.ERROR]: {
-      on: {
-        fetch: ApiMachineState.PENDING
-      }
     }
-  }
 }, {
-  actions: {
+    actions: {
     // setResults: assign((context, event) => ({ users: event.users}),
     // setError: assign((context, event)) => ({error: event.error})
-  }
+    }
 });
 
 

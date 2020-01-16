@@ -21,6 +21,7 @@ module.exports = {
         "import/extensions": [1, "never", { ts: "never", "json": "always" }],
         "react/jsx-indent": ["error", 4],
         "react/jsx-indent-props": ["error", 4],
+        "indent": ["error", 4],
         "react/jsx-props-no-spreading": "off",
         "quotes": ["error", "double"],
         "comma-dangle": ["error", "never"],
