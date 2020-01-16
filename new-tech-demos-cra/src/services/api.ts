@@ -12,11 +12,11 @@ const mockUsers = [
     { id: "u7", name: "Gavin Shaw" }
 ];
 
-
+// TODO: Need to implement api Response for error
 const getAllUsers = (): Promise<any> => {
     // eslint-disable-next-line no-console
     console.log("fetching users from api");
-    const p = new Promise((resolve) => setTimeout(resolve, 3000, mockUsers));
+    const p = new Promise<User[]>((resolve) => setTimeout(resolve, 3000, mockUsers));
     return p;
 };
 

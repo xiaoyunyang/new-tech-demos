@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMachine } from "@xstate/react";
-import getAllUsers, { User } from "../services/api";
+import getAllUsers from "../services/api";
 import UsersList from "../components/UsersList";
 import apiMachine, { ApiMachineState } from "../machines/apiMachine";
-
 
 export default function UsersScreen() {
     const [usersState, dispatch] = useMachine(apiMachine, {
