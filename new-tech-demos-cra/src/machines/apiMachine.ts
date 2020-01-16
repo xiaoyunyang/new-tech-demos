@@ -1,7 +1,7 @@
 import { Machine } from "xstate";
 import { assign } from "xstate/lib/actionTypes";
 
-enum UsersList {
+export enum ApiMachineState {
   IDLE = "IDLE",
   PENDING = "PENDING",
   SUCCESS = "SUCCESS",
@@ -9,38 +9,38 @@ enum UsersList {
 }
 const usersMachine = Machine({
   id: "usersMachine",
-  initial: "idle",
+  initial: ApiMachineState.IDLE,
   context: {
     users: [],
     errorMessage: ""
   },
   states: {
-    [UsersList.IDLE]: {
+    [ApiMachineState.IDLE]: {
       on: {
-        fetch: UsersList.PENDING
+        fetch: ApiMachineState.PENDING
       }
     },
-    [UsersList.PENDING]: {
+    [ApiMachineState.PENDING]: {
       entry: "fetchData",
       on: {
         resolve: {
-          target: UsersList.SUCCESS,
+          target: ApiMachineState.SUCCESS,
           actions: ["setResults"]
         },
         reject: {
-          target: UsersList.ERROR,
+          target: ApiMachineState.ERROR,
           actions: ["setError"]
         }
       }
     },
-    [UsersList.SUCCESS]: {
+    [ApiMachineState.SUCCESS]: {
       on: {
-        fetch: UsersList.PENDING
+        fetch: ApiMachineState.PENDING
       }
     },
-    [UsersList.ERROR]: {
+    [ApiMachineState.ERROR]: {
       on: {
-        fetch: UsersList.PENDING
+        fetch: ApiMachineState.PENDING
       }
     }
   }

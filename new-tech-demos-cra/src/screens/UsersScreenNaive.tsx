@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import getAllUsers, { User } from "../services/api";
+import UsersList from "../components/UsersList";
 
-const Users: React.FC<{users: User[]}> = ({ users }: {users: User[] }) => (
-    <ul>
-        {users.map((user: User) => <li key={user.id}>{user.name}</li>)}
-    </ul>
-);
 export default function UsersScreen() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -17,15 +13,10 @@ export default function UsersScreen() {
   }
   return (
       <div className="App">
-          <div>
-              <h1>Naive Users Screen</h1>
-              <button type="button" onClick={fetchUsers}>Fetch Users</button>
-              {loading && <h1>loading ...</h1>}
-              {!loading && <Users users={users} />}
-          </div>
-          <div>
-              <Users users={[]} />
-          </div>
+          <h1>Naive Users Screen</h1>
+          <button type="button" onClick={fetchUsers}>Fetch Users</button>
+          {loading && <h1>loading ...</h1>}
+          {!loading && <UsersList users={users} />}
       </div>
   );
 }
