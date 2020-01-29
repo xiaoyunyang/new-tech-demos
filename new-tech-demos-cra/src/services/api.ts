@@ -13,10 +13,15 @@ const mockUsers = [
 ];
 
 // TODO: Need to implement api Response for error
-const getAllUsers = (): Promise<any> => {
+const getAllUsers = (hasError = false): Promise<any> => {
     // eslint-disable-next-line no-console
     console.log("fetching users from api");
-    const p = new Promise<User[]>((resolve) => setTimeout(resolve, 3000, mockUsers));
+    const p = new Promise<User[]>(
+        (resolve, reject) => (hasError
+            ? setTimeout(reject, 3000, "Oops! There's an Error")
+            : setTimeout(resolve, 3000, mockUsers))
+    );
+
     return p;
 };
 

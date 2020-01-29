@@ -22,9 +22,27 @@ export enum ApiMachineEvent {
     REJECT = "reject"
 }
 
-interface Event {
+// Event always have type and either users or errorMessage, never both
+
+interface EventFetch {
     type: ApiMachineEvent;
+    hasError: boolean;
+    users?: never;
+    errorMessage?: never;
 }
+interface EventSuccess {
+    type: ApiMachineEvent;
+    hasError?: never;
+    users: User[];
+    errorMessage?: never;
+}
+interface EventReject {
+    type: ApiMachineEvent;
+    hasError?: never;
+    users?: never;
+    errorMessage: string;
+}
+type Event = EventFetch | EventSuccess | EventReject
 
 enum UserMachineAction {
     SET_RESULT = "setResult",
@@ -33,7 +51,7 @@ enum UserMachineAction {
 }
 
 // TODO: The third type parameter is Event
-const usersMachine = Machine<Context, StateSchema>(
+const usersMachine = Machine<Context, StateSchema, Event>(
     {
         id: "usersMachine",
         initial: ApiMachineState.IDLE,
@@ -75,8 +93,7 @@ const usersMachine = Machine<Context, StateSchema>(
     {
         actions: {
             setResult: assign((context, event) => ({ users: event.users })),
-            setError: assign((context, event) => ({ errorMessage: event.error }))
-
+            setError: assign((context, event) => ({ errorMessage: event.errorMessage }))
         }
     }
 );
